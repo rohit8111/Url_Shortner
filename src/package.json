@@ -1,0 +1,22 @@
+{
+  "name": "url_shortner",
+  "version": "1.0.0",
+  "description": "Convert Long Url into short using URL_Shortner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "keywords": [
+    "URL",
+    "NodeJS",
+    "MongoDB"
+  ],
+  "author": "Rohit Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0",
+    "nanoid": "^4.0.0"
+  }
+}
