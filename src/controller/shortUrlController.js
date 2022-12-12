@@ -69,7 +69,7 @@ url_shortner.shortUrl = async (req, res, next) => {
     let ogUrlChecker = await shorturl.findOne({ userId: userId, full: data });
     if (ogUrlChecker) {
       const newUrl = ogUrlChecker;
-      console.log(newUrl);
+     
       res.status(201).json({ newUrl });
     } else {
       const newUrl = shorturl({
@@ -81,7 +81,7 @@ url_shortner.shortUrl = async (req, res, next) => {
       //_id from mongodb
       const shortUrlFromId = newUrl._id.toString().slice(-6);
       newUrl.short = shortUrlFromId;
-      console.log(newUrl);
+     
       newUrl.save(function (err) {
         if (err) throw err;
         console.log("the new URL is added");

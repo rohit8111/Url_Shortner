@@ -25,8 +25,8 @@ const handleErrors = (err) => {
     if (err.message.includes('user validation failed')) {
       console.log(err);
       Object.values(err.errors).forEach(({ properties }) => {
-        console.log(err.errors);
-        // console.log(properties);
+       
+       
         errors[properties.path] = properties.message;
       });
     }
@@ -55,7 +55,7 @@ module.exports.signup_get=(req,res)=>{
 //post request for signup
 module.exports.signup_post=async(req,res)=>{
     const {name, emailId, password } = req.body;
-    console.log(emailId);
+  
     try {
       const user = await User.create({ name,emailId, password });
       const token=createToken(user._id);
