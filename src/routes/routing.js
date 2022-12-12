@@ -16,7 +16,7 @@ router.post('/login', authController.login_post);
 //post request for Registering User
 router.post('/signup',authController.signup_post);
 
-router.post('/',shortUrlController.shortUrl);
+
 
 router.get('/logout',authController.logout_get);
 

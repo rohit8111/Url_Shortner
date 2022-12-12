@@ -3,6 +3,7 @@ const router=require('./routes/routing');
 const cookieParser=require('cookie-parser');
 const {requireAuth,checkUser}=require('./middleware/authMiddlewear');
 const shortUrlRouting=require('./routes/shorturlrouting');
+const routeToOriginal=require('./routes/routing_to_og');
 const app=express();
 const mongoose = require('mongoose');
 
@@ -25,8 +26,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.get('*', checkUser);
 app.use('/',router);
-
-app.use('/shorturl',requireAuth,shortUrlRouting);
+app.get('/:userId',routeToOriginal);
+app.use('/short',requireAuth,shortUrlRouting);
 
 // app.listen(3000,()=>{
 //     console.log('Server Started on Port 3000');

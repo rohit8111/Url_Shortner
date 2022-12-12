@@ -1,11 +1,56 @@
 <%- include('partials/header'); -%>
 
 <header>
-  <div class="headings">
+  <form >
     <h2>Enter Url</h2>
-    
-  </div>
+   
+    <label for="url">URL</label>
+    <input type="text" name="url" required />
+    <div class="email error"></div>
+   
+    <button>Generate</button>
+  </form>
+  <a class="link"><h3 class="shortUrl"></h3></a>
 </header>
+<script>
+  const form = document.querySelector('form');
+  const emailError = document.querySelector('.email.error');
+  const shortUrl = document.querySelector('.shortUrl');
+  const link = document.querySelector('.link');
 
+
+
+  form.addEventListener('submit', async(e) => {
+    e.preventDefault();
+    emailError.textContent = '';
+   
+    // get values
+    const url = form.url.value;
+    
+    try {
+   
+        const res=await fetch('/short/shorturl',{
+            method:'POST',
+            body:JSON.stringify({url}),
+            headers:{'Content-Type': 'application/json'}
+        })
+      
+        const data=await res.json();
+       
+        if(data.errors){
+            emailError.textContent=data.errors.emailId;
+           
+        }
+        if(data.newUrl){
+          shortUrl.textContent=`http://localhost:3000/${data.newUrl.short}`;
+          console.log(data.newUrl.short);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
+  
+  });
+</script>
 
 <%- include('partials/footer'); -%>
