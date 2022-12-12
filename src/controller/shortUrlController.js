@@ -35,7 +35,7 @@ const handleErrors = (err) => {
 function getToken(token)  {
  var userId="";
   if (token) {
-    jwt.verify(token, "Project Mil Jaye Jaldi", async (err, decodeedToken) => {
+    jwt.verify(token, process.env.JWT_SECREAT, async (err, decodeedToken) => {
       if (err) {
         res.redirect("/login");
       } else {

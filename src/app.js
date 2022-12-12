@@ -8,18 +8,15 @@ const app=express();
 const mongoose = require('mongoose');
 
 
+require('dotenv').config()
 
 app.use(express.static('public'));
 app.set('view engine','ejs');
-const dbURI = 'mongodb+srv://rohit:rohit@cluster0.21fwy8u.mongodb.net/shortUrl?authSource=admin&compressors=zlib&retryWrites=true&w=majority&ssl=true';
+const dbURI = process.env.connection_string;
+
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
-// main().catch(err => console.log(err));
-// //Databse Connection
-// async function main() {
-//   await mongoose.connect('');
-// }
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -29,6 +26,4 @@ app.use('/',router);
 app.get('/:userId',routeToOriginal);
 app.use('/short',requireAuth,shortUrlRouting);
 
-// app.listen(3000,()=>{
-//     console.log('Server Started on Port 3000');
-// })
+

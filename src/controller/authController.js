@@ -37,7 +37,7 @@ const handleErrors = (err) => {
   //Generating JWT token valid upto 3 days
   const maxAge = 3 * 24 * 60 * 60;
   const createToken = (id) => {
-    return jwt.sign({ id }, 'Project Mil Jaye Jaldi', {
+    return jwt.sign({ id }, process.env.JWT_SECREAT, {
       expiresIn: maxAge
     });
   };
