@@ -13,7 +13,10 @@ router.get('/:urlId',async(req,res)=>{
         let status=await shorturl.findOne({short:urlId});
         if(status){
         var fullUrl=status.full;
-        console.log(fullUrl);
+        console.log(status);
+        status.clicks++;
+        await status.save();
+       
         res.redirect(fullUrl);}
         else{
             res.statusCode=404;

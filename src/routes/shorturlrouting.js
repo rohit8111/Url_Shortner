@@ -7,5 +7,6 @@ const router=express.Router();
 router.get('/shorturl',(req,res)=>{
     res.render('shorturl');
 })
+router.get('/allurls',shortUrlController.getAllUrls);
 router.post('/shorturl',shortUrlController.shortUrl);
 module.exports=router;
