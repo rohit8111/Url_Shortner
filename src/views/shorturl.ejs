@@ -38,13 +38,16 @@
         const data=await res.json();
        
         if(data.errors){
-            emailError.textContent=data.errors.emailId;
+          console.log(data.errors);
+          shortUrl.textContent='';
+            emailError.textContent=data.errors.full;
            
-        }
+        }else{
         if(data.newUrl){
           shortUrl.textContent=`http://localhost:3000/${data.newUrl.short}`;
           console.log(data.newUrl.short);
         }
+      }
     } catch (error) {
         console.log(error);
     }

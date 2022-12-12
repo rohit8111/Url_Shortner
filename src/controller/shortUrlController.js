@@ -1,17 +1,19 @@
 const shorturl=require('../model/urlshortschema');
 const jwt = require('jsonwebtoken');
+const { isEmail,isURL } = require('validator');
 const url_shortner={};
 
 
 //handle Error
 const handleErrors = (err) => {
     console.log(err.message, err.code);
-    let errors = { url:''};
+    let errors = { full:''};
 
     //incorrect email while login
-    // if (err.message === 'incorrect email') {
-    //     errors.emailId = 'EmailId is not registered';
-    //   }
+    if (err.message === 'URl is invalid') {
+        errors.full= 'URL is invalid';
+        return errors;
+      }
     
       
      
@@ -21,10 +23,10 @@ const handleErrors = (err) => {
     }
   
     // validation errors
-    if (err.message.includes('user validation failed')) {
-      console.log(err);
+    if (err.message.includes('ShortUrl validation failed')) {
+      // console.log(err);
       Object.values(err.errors).forEach(({ properties }) => {
-        console.log(err.errors);
+        // console.log(err.errors);
         // console.log(properties);
         errors[properties.path] = properties.message;
       });
@@ -52,7 +54,12 @@ url_shortner.shortUrl=async(req,res,next)=>{
     res.redirect('/login');
 
   }
-  
+  if(!isURL(data)){
+    let err=new Error("URl is invalid");
+    throw err;
+
+  }
+      
 
    const newUrl=shorturl({
     userId:userId,
@@ -65,6 +72,7 @@ url_shortner.shortUrl=async(req,res,next)=>{
     newUrl.short = shortUrlFromId;
     console.log(newUrl);
     newUrl.save(function(err){
+        if(err) throw err;
         console.log("the new URL is added");
     })
     res.status(201).json({newUrl});
@@ -78,7 +86,7 @@ url_shortner.shortUrl=async(req,res,next)=>{
         
     } catch (err) {
         const errors = handleErrors(err);
-        console.log(err);
+        console.log(errors);
         res.status(400).json({ errors });
        
     }

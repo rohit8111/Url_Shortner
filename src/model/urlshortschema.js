@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { isEmail } = require('validator');
+const { isEmail,isURL } = require('validator');
+// const { default: isURL } = require('validator/lib/isURL');
 // validate original url
 //  function validateUrl(value) {
   
@@ -13,12 +14,7 @@ const shortUrlSchema = new mongoose.Schema({
   full: {
     type: String,
     required: [true,"Please Enter URL to short"],
-    validate: {
-      validator: function(v) {
-        return /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(v);
-      },
-      message: props => ` Enter valid URL!`
-    }
+    validate:  [isURL, 'Please enter a valid URL']
   },
   short: {
     type: String,
